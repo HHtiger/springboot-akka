@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+logging:
+  file: maintain.log
+  level:
+    root: WARN
+    druid.sql.Statement: DEBUG
+    com.tiger.mapper: warn
+    com.tiger: DEBUG
