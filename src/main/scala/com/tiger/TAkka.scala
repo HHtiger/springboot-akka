@@ -62,8 +62,6 @@ class GetPic(system: ActorSystem) {
       case Failure(NonFatal(e)) =>
         println("cannot get,timeout")
     }
-    val result = Await.result(f4, 3 seconds).asInstanceOf[String]
-
-    result
+    Await.result(f4, 3 seconds).asInstanceOf[String]
   }
 }
