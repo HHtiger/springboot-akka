@@ -16,6 +16,6 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return new GetPic(actorSystem).get();
+        return GetPic.get(actorSystem);
     }
 }

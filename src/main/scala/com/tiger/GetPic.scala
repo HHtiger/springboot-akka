@@ -1,6 +1,6 @@
 package com.tiger
 
-import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, AllDeadLetters, DeadLetter, PoisonPill, Props}
+import akka.actor.{Actor, ActorRef, ActorSystem, DeadLetter, PoisonPill, Props}
 import akka.event.Logging
 import akka.pattern._
 import akka.util.Timeout
@@ -12,39 +12,10 @@ import scala.util.{Failure, Random, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
-  * Created by tiger on 2017/7/26.
+  * Created by tiger on 2017/7/31.
   */
-
-case class BigPic(name: String)
-
-case class SmallPic(name: String)
-
-class GetPicActor extends Actor {
-
-  val log = Logging(context.system, this)
-
-  override def receive: Receive = {
-    case big: BigPic =>
-      log.debug("begin get big")
-      //      Thread.sleep(Random.nextInt(10000))
-      Thread.sleep(2000)
-      sender() ! "big ok"
-    case small: SmallPic =>
-      log.debug("begin get small")
-      //      Thread.sleep(Random.nextInt(10000))
-      Thread.sleep(2000)
-      sender() ! "small ok"
-  }
-}
-
-class DeadLetterListener extends Actor {
-  def receive = {
-    case d: DeadLetter => println(d)
-  }
-}
-
-class GetPic(system: ActorSystem) {
-  def get : String= {
+object GetPic {
+  def get(system: ActorSystem) : String={
     val big: ActorRef = system.actorOf(Props[GetPicActor])
     val small: ActorRef = system.actorOf(Props[GetPicActor])
 
@@ -62,6 +33,10 @@ class GetPic(system: ActorSystem) {
       case Failure(NonFatal(e)) =>
         println("cannot get,timeout")
     }
+
+    big ! PoisonPill
+    small ! PoisonPill
+
     Await.result(f4, 3 seconds).asInstanceOf[String]
   }
 }
