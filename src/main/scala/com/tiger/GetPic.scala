@@ -1,15 +1,14 @@
 package com.tiger
 
-import akka.actor.{Actor, ActorRef, ActorSystem, DeadLetter, PoisonPill, Props}
-import akka.event.Logging
+import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
 import akka.pattern._
 import akka.util.Timeout
 
-import scala.concurrent.{Await, Future, Promise}
-import scala.concurrent.duration._
-import scala.util.control.NonFatal
-import scala.util.{Failure, Random, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
+import scala.util.control.NonFatal
+import scala.util.{Failure, Success}
 
 /**
   * Created by tiger on 2017/7/31.
