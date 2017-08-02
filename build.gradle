@@ -1,56 +1,37 @@
-group 'com.tiger'
-version '1.0-SNAPSHOT'
-
-apply plugin: 'java'
-apply plugin: 'scala'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenLocal()
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-    mavenCentral()
-}
-sourceSets {
-    main {
-        scala {
-            srcDirs = ['src/main/scala', 'src/main/java']
-        }
-        java {
-            srcDirs = []
-        }
-    }
-
-    test {
-        scala {
-            srcDirs = ['src/test/scala', 'src/test/java']
-        }
-        java {
-            srcDirs = []
-        }
-    }
-}
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.2'
-    compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.12.2'
-    compile group: 'org.scala-lang', name: 'scala-reflect', version: '2.12.2'
-    compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: '2.5.3'
-    compile("org.springframework.boot:spring-boot-starter-web:1.5.6.RELEASE")
-    testCompile 'org.testng:testng:6.10'
-
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'AppDemo'
+allprojects {
+    ext {
+        scalaVersion = '2.12.2'
+        akkaVersion = '2.5.3'
+        junitVersion = '4.12'
+        testNgVersion = '6.10'
     }
 }
 
-task createDirs {
-    doLast {
-        sourceSets*.scala.srcDirs*.each { it.mkdirs() }
-        sourceSets*.java.srcDirs*.each { it.mkdirs() }
-        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+subprojects {
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
     }
+
+    apply plugin: 'java'
+    apply plugin: 'scala'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: junitVersion
+        testCompile "org.testng:testng:${testNgVersion}"
+    }
+
+    task createDirs {
+        doLast {
+            sourceSets*.scala.srcDirs*.each { it.mkdirs() }
+            sourceSets*.java.srcDirs*.each { it.mkdirs() }
+            sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+        }
+    }
+
 }

@@ -18,7 +18,7 @@ public class SampleControllerTest {
         actorSystem = ActorSystem.create("actorSystem");
     }
 
-    @Test(threadPoolSize = 12,invocationCount = 50000)
+    @Test(threadPoolSize = 12,invocationCount = 1000)
     public void test(){
         GetPic.get(actorSystem);
     }
