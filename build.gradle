@@ -26,6 +26,11 @@ subprojects {
         testCompile "org.testng:testng:${testNgVersion}"
     }
 
+    test {
+        useTestNG()
+        reports.html.enabled = true
+    }
+
     task createDirs {
         doLast {
             sourceSets*.scala.srcDirs*.each { it.mkdirs() }
