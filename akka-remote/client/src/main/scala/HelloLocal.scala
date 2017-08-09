@@ -1,13 +1,14 @@
 import java.util.UUID
 
 import akka.actor._
+import com.tiger.model.PigOuterClass.Pig
 
 object Local extends App {
 
   implicit val system = ActorSystem("LocalSystem")
   val localActor = system.actorOf(Props[LocalActor], name = "LocalActor")  // the local actor
   for( i <- 1 to 1000){
-    localActor ! new Ball(UUID.randomUUID().toString)
+    localActor ! Pig.newBuilder().setId(UUID.randomUUID().toString).build()
   }
 
 }
@@ -21,6 +22,8 @@ class LocalActor extends Actor {
     case ball:Ball =>
       remote ! ball
     case count: Int =>
-      println(s"total ball is : $count")
+      println(s"total is : $count")
+    case pig : Pig =>
+      remote ! pig
   }
 }

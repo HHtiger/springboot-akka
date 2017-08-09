@@ -1,6 +1,7 @@
 import java.util.concurrent.atomic.AtomicInteger
 
 import akka.actor._
+import com.tiger.model.PigOuterClass.Pig
 
 object HelloRemote extends App  {
   val system = ActorSystem("HelloRemoteSystem")
@@ -17,6 +18,9 @@ class RemoteActor extends Actor {
       println(s"RemoteActor received message '$msg'")
     case ball: Ball =>
       println(ball.id)
+      sender() ! count.incrementAndGet()
+    case pig : Pig =>
+      println(pig.getId)
       sender() ! count.incrementAndGet()
   }
 }

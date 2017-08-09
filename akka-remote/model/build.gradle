@@ -1,7 +1,52 @@
-sourceSets.main.scala.srcDirs = ['src/main/scala', 'src/main/java']
-sourceSets.test.scala.srcDirs = ['src/test/scala', 'src/test/java']
-sourceSets.main.java.srcDirs = []
-sourceSets.test.java.srcDirs = []
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.google.protobuf:protobuf-gradle-plugin:0.8.2"
+    }
+}
+
+apply plugin: "com.google.protobuf"
+
+protobuf {
+    // Configure the protoc executable
+    protoc {
+        // Download from repositories
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    generatedFilesBaseDir = "$projectDir/src/"
+
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala', 'src/main/java']
+        }
+        java {
+            srcDirs = []
+        }
+        proto {
+            srcDir 'src/main/proto'
+        }
+    }
+    test {
+        scala {
+            srcDirs = ['src/test/scala', 'src/test/java']
+        }
+        java {
+            srcDirs = []
+        }
+        proto {
+            // In addition to the default 'src/test/proto'
+            srcDir 'src/test/protocolbuffers'
+
+        }
+    }
+}
 
 dependencies {
     compile group: 'org.scala-lang', name: 'scala-library', version: scalaVersion
@@ -9,5 +54,8 @@ dependencies {
     compile group: 'org.scala-lang', name: 'scala-reflect', version: scalaVersion
     compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: akkaVersion
     compile group: 'com.typesafe.akka', name: 'akka-remote_2.12', version: akkaVersion
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.3.1'
+
+
 }
 
