@@ -1,0 +1,14 @@
+sourceSets.main.scala.srcDirs = ['src/main/scala', 'src/main/java']
+sourceSets.test.scala.srcDirs = ['src/test/scala', 'src/test/java']
+sourceSets.main.java.srcDirs = []
+sourceSets.test.java.srcDirs = []
+
+dependencies {
+    compile group: 'org.scala-lang', name: 'scala-library', version: scalaVersion
+    compile group: 'org.scala-lang', name: 'scala-compiler', version: scalaVersion
+    compile group: 'org.scala-lang', name: 'scala-reflect', version: scalaVersion
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: akkaVersion
+    compile group: 'com.typesafe.akka', name: 'akka-remote_2.12', version: akkaVersion
+    compile project(":akka-remote/model")
+}
+

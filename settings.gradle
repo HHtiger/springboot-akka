@@ -1,3 +1,6 @@
 rootProject.name = 'springboot-akka'
 
 include(':springboot')
+include(':akka-remote/server')
+include(':akka-remote/client')
+include(':akka-remote/model')
