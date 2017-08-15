@@ -20,7 +20,7 @@ class RemoteActor extends Actor {
       println(ball.id)
       sender() ! count.incrementAndGet()
     case pig : Pig =>
-      println(pig.getId)
+      println(s"class is ${pig.getClass.getName},id is ${pig.getId}")
       sender() ! count.incrementAndGet()
   }
 }
