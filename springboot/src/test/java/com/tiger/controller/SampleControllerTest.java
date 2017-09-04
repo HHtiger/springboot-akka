@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,7 +32,7 @@ public class SampleControllerTest {
 
         String testRes = "noBig-noSmall";
 
-        given(picServer.getPic()).willReturn(testRes);
+        when(picServer.getPic()).thenReturn(testRes);
 
         mockMvc.perform(get("/getPic"))
                 .andDo(print())
