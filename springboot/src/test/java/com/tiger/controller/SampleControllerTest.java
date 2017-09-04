@@ -1,32 +1,43 @@
 package com.tiger.controller;
 
-import akka.actor.ActorSystem;
-import com.tiger.GetPic;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
-/**
- * Created by tiger on 2017/7/31.
- */
+import com.tiger.com.tiger.PicServer;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebMvcTest(SampleController.class)
 public class SampleControllerTest {
 
-    private ActorSystem actorSystem;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @BeforeTest
-    public void before(){
-        actorSystem = ActorSystem.create("actorSystem");
+    @MockBean
+    private PicServer picServer;
+
+
+    @Test
+    public void testGetPic() throws Exception {
+
+        String testRes = "noBig-noSmall";
+
+        given(picServer.getPic()).willReturn(testRes);
+
+        mockMvc.perform(get("/getPic"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(testRes));
     }
-
-    @Test(threadPoolSize = 12,invocationCount = 1000)
-    public void test(){
-        GetPic.get(actorSystem);
-    }
-
-    @AfterTest
-    public void after(){
-        System.out.printf("total time : %d s",actorSystem.uptime());
-    }
-
 
 }

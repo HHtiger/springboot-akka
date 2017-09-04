@@ -1,7 +1,6 @@
 package com.tiger.controller;
 
-import akka.actor.ActorSystem;
-import com.tiger.GetPic;
+import com.tiger.com.tiger.PicServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SampleController {
 
     @Autowired
-    private ActorSystem actorSystem;
+    private PicServer picServer;
 
-    @RequestMapping("/")
+    @RequestMapping("/getPic")
     @ResponseBody
-    String home() {
-        return GetPic.get(actorSystem);
+    public String getPic() {
+        return picServer.getPic();
     }
 }
