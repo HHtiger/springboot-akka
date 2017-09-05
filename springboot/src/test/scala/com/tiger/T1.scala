@@ -1,5 +1,6 @@
 package com.tiger
 
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
@@ -15,6 +16,7 @@ class Print extends Actor with ActorLogging{
     case (v1:ActorRef,v2:ActorRef) =>
       for(i <- 1 to 5){
         log.debug("{}",Print.count.incrementAndGet())
+        TimeUnit.MILLISECONDS.sleep(100)
       }
       if(Print.count.get()<75){
         v1 ! (v2,self)
