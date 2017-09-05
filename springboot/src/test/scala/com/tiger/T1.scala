@@ -26,7 +26,7 @@ class Print extends Actor with ActorLogging{
 }
 
 
-object aaa {
+object T1 {
 
   def main(args: Array[String]): Unit = {
     val system = ActorSystem.create()
