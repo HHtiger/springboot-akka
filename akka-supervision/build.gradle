@@ -1,0 +1,9 @@
+sourceSets.main.java.srcDirs = ['src/main/java']
+sourceSets.test.java.srcDirs = ['src/test/java']
+
+dependencies {
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: akkaVersion
+    compile group: 'com.typesafe.akka', name: 'akka-slf4j_2.12', version: akkaVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '1.5.6.RELEASE'
+}
+
